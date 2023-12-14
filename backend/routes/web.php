@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->json(['name' => 'Innyx Api', 'status' => 'Active']);
+    return response()->json(['name' => env('APP_NAME'), 'status' => 'Active']);
 });

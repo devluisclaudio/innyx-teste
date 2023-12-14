@@ -43,6 +43,20 @@ services:
       - innyx_network
     depends_on:
       - db
+    environment:
+      APP_NAME: InnyxApi
+      APP_ENV: local
+      APP_TIMEZONE: America/Sao_Paulo
+      APP_KEY: base64:vFRJhJwgb8dHP9xaO5Ws3+HAtJ8Z4Xq+10jg0XpaMv0= 
+      APP_DEBUG: true
+      APP_URL: http://localhost
+      APP_LOG_LEVEL: debug
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: innyx
+      DB_USERNAME: root
+      DB_PASSWORD: root
   # portal:
   #   image: nginx:alpine
   #   container_name: innyx-portal
