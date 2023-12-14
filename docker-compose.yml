@@ -57,6 +57,7 @@ services:
       DB_DATABASE: innyx
       DB_USERNAME: root
       DB_PASSWORD: root
+      JWT_SECRET: qS3bqpCXyHcElxjRaM4dpiWOaOAPErCJI4hPvuwRfNezn3OlKnBOBCYZVUBovyyc
   # portal:
   #   image: nginx:alpine
   #   container_name: innyx-portal
