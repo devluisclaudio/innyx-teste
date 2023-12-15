@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Type\Integer;
 
 class ProdutoRepository
 {
@@ -50,6 +51,20 @@ class ProdutoRepository
         } catch (Exception $ex) {
             report($ex);
             DB::rollBack();
+            return false;
+        }
+    }
+
+    public function getItem(int $id)
+    {
+        try {
+            $query = $this->model->find($id);
+            if (!$query)
+                return false;
+
+            return $query;
+        } catch (Exception $ex) {
+            report($ex);
             return false;
         }
     }
