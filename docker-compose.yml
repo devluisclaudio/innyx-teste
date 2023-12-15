@@ -58,19 +58,6 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: root
       JWT_SECRET: qS3bqpCXyHcElxjRaM4dpiWOaOAPErCJI4hPvuwRfNezn3OlKnBOBCYZVUBovyyc
-  # portal:
-  #   image: nginx:alpine
-  #   container_name: innyx-portal
-  #   restart: unless-stopped
-  #   tty: true
-  #   working_dir: /var/www/html/
-  #   volumes:
-  #     - ./portal:/var/www/html/
-  #     - ./docker/nginx/nginx-front.conf:/etc/nginx/conf.d/default.conf
-  #   ports:
-  #     - "80:80"
-  #   networks:
-  #     - innyx_network
 networks:
   innyx_network:
     driver: bridge
