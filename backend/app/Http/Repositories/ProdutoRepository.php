@@ -23,7 +23,7 @@ class ProdutoRepository
     public function getItens(Request $request)
     {
         try {
-            $query = $this->model;
+            $query = $this->model->with('categoria');
             if (isset($request->search) && !empty($request->search)) {
                 $query = $query->where('nome', 'like', '%' . $request->search . '%')->orWhere('descricao', 'like', '%' . $request->search . '%');
             }
@@ -34,13 +34,13 @@ class ProdutoRepository
         }
     }
 
-    public function save(ProdutoPostRequest $request)
+    public function save(ProdutoPostRequest $request, int $id = null)
     {
         try {
             DB::beginTransaction();
-            if (isset($request->id) && !empty($request->id)) {
-                $item = $this->model->find($request->id);
-                $status = $item->merge($request)->save();
+            if (!empty($id)) {
+                $item = $this->model->find($id);
+                $status = $item->update($request->toArray());
             } else {
                 Log::info(json_encode($request->toArray()));
                 $status = $this->model->fill($request->toArray())->save();
@@ -58,13 +58,31 @@ class ProdutoRepository
     public function getItem(int $id)
     {
         try {
-            $query = $this->model->find($id);
+            $query = $this->model->with('categoria')->find($id);
             if (!$query)
                 return false;
 
             return $query;
         } catch (Exception $ex) {
             report($ex);
+            return false;
+        }
+    }
+
+    public function delete(int $id)
+    {
+        try {
+            DB::beginTransaction();
+            $query = $this->model->find($id);
+            if (!$query)
+                return false;
+            
+            $result = $query->delete();
+            DB::commit();
+            return $result;
+        } catch (Exception $ex) {
+            report($ex);
+            DB::rollBack();
             return false;
         }
     }

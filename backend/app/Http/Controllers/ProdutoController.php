@@ -57,4 +57,32 @@ class ProdutoController extends Controller
             return response()->json(['message' => $ex->getMessage()], 500);
         }
     }
+
+    public function update(ProdutoPostRequest $request, int $id)
+    {
+        try {
+            $result = $this->repository->save($request, $id);
+            if ($result)
+                return response()->json(['message' => 'Produto Atualizado!'], 200);
+
+            return response()->json(['message' => 'Falha ao atualizar produto!'], 400);
+        } catch (Exception $ex) {
+            report($ex);
+            return response()->json(['message' => $ex->getMessage()], 500);
+        }
+    }
+
+    public function destroy(int $id)
+    {
+        try {
+            $result = $this->repository->delete($id);
+            if ($result)
+                return response()->json(['message' => 'Produto excluído com sucesso!'], 200);
+
+            return response()->json(['message' => 'Falha ao excluir produto!'], 400);
+        } catch (Exception $ex) {
+            report($ex);
+            return response()->json(['message' => $ex->getMessage()], 500);
+        }
+    }
 }
