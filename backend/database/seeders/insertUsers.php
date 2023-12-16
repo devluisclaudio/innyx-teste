@@ -15,7 +15,7 @@ class insertUsers extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Luis Chaves',
+            'name' => 'Dev Innyx',
             'email' => 'teste@admin.com',
             'password' => Hash::make('Aa1234567'),
         ]);

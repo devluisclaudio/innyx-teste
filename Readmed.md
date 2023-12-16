@@ -41,3 +41,8 @@ Bom, agora na pasta portal-innyx, basta iniciar o server para o projeto ser exec
 ```bash
 > npm run dev
 ```
+
+### Credenciais de Teste para Login 💨
+
+* **Email: teste@admin.com**
+* **Senha: Aa1234567**
