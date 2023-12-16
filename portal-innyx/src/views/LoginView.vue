@@ -14,7 +14,8 @@
                         <InputText id="password" type="password" class="w-12rem md:w-19rem" v-model="password"
                             :class="{ 'p-invalid': errorPassword }" placeholder="Digite sua senha" />
                     </div>
-                    <Button label="Login" icon="pi pi-user" class="w-10rem md:w-19rem mt-5" :loading="loading" @click="login"></Button>
+                    <Button label="Login" icon="pi pi-user" class="w-10rem md:w-19rem mt-5" :loading="loading"
+                        @click="login"></Button>
                     <Toast />
                 </div>
             </div>
@@ -38,12 +39,18 @@ import { ref, watch } from "vue";
 import { useToast } from 'primevue/usetoast';
 
 import { validaFormLogin } from '@/utils/vaildaForm'
+import { LoginService } from "@/services/login";
+import { useJwtStore } from "@/stores/jwt";
+import router from "@/router";
+import { useUserStore } from "@/stores/user";
 
 const toast = useToast();
 const email = ref('')
 const password = ref('')
 const errorEmail = ref(false)
 const errorPassword = ref(false)
+const jwtStore = useJwtStore()
+const userStore = useUserStore()
 
 const loading = ref(false)
 
@@ -59,8 +66,23 @@ const login = () => {
     if (invalidPassword)
         errorPassword.value = true
 
-    if (error)
-        toast.add({ severity: 'error', summary: 'Alerta', detail: message, life: 3000 });
+    if (error) {
+        loading.value = false
+        return toast.add({ severity: 'error', summary: 'Alerta', detail: message, life: 3000 });
+    }
+
+    LoginService.login(email.value, password.value).then(({ data: { access_token, user } }) => {
+        userStore.setUser(user)
+        jwtStore.setJwt(access_token)
+        toast.add({ severity: 'success', summary: 'Bem vindo', detail: 'Logado com sucesso!', life: 3000 })
+        router.push({ name: 'home' })
+    }).catch(({ response: { status } }) => {
+        loading.value = false
+        if (status === 401)
+            return toast.add({ severity: 'error', summary: 'Alerta', detail: 'Credenciais incorretas!', life: 3000 })
+
+        return toast.add({ severity: 'error', summary: 'Alerta', detail: 'Erro interno!', life: 3000 })
+    })
 
 }
 </script>

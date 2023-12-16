@@ -1,4 +1,4 @@
-import { jwtStore } from "@/stores/jwt"
+import { useJwtStore } from "@/stores/jwt"
 import axios from "axios"
 
 const api = axios.create({
@@ -6,7 +6,7 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(async function (config) {
-    const store = jwtStore()
+    const store = useJwtStore()
     if (store.jwt)
         config.headers.Authorization = `Bearer ${store.jwt}`
 
@@ -18,13 +18,11 @@ api.interceptors.request.use(async function (config) {
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        console.log(error)
-
         if (error?.response?.status !== 401 || error.code === "ERR_NETWORK") {
             return Promise.reject(error);
         }
 
-        const store = jwtStore()
+        const store = useJwtStore()
 
         if (store.jwt && store.countRetest < 3)
             return store.refreshJwt().then(({ data }) => {
