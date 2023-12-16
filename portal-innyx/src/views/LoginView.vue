@@ -29,7 +29,7 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import InputText from "primevue/inputtext"
 import Button from "primevue/button"
 import Toast from 'primevue/toast';
@@ -37,7 +37,7 @@ import Toast from 'primevue/toast';
 import { ref, watch } from "vue";
 import { useToast } from 'primevue/usetoast';
 
-import { validaFormLogin } from '../utils/vaildaForm'
+import { validaFormLogin } from '@/utils/vaildaForm'
 
 const toast = useToast();
 const email = ref('')
