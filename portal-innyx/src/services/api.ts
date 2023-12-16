@@ -26,7 +26,7 @@ api.interceptors.response.use(
 
         if (store.jwt && store.countRetest < 3)
             return store.refreshJwt().then(({ data }) => {
-                store.setJwt(data.authorisation.token)
+                store.setJwt(data.access_token)
                 return api(error.config)
             }).catch(() => {
                 return Promise.reject(error)

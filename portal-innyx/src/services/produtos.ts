@@ -1,7 +1,7 @@
 import api from "./api"
 
 export const ProdutoService = {
-    getData () {
-        return api.get('v1/produtos')
+    getData (search: string , page: boolean) {
+        return api.get(`v1/produtos?search=${search}&page=${page}`)
     }
 }
