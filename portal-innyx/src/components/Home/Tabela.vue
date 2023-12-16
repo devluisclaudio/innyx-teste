@@ -1,7 +1,7 @@
 <template>
     <div class="card m-2">
-        <DataTable :value="customers" paginator :rows="5" :rowsPerPageOptions="[5, 10, 15, 20]" tableStyle="min-width: 50rem"
-            :loading="loading">
+        <DataTable :value="customers" paginator :rows="5" :rowsPerPageOptions="[5, 10, 15, 20]"
+            tableStyle="min-width: 50rem" :loading="loading">
             <template #header>
                 <div class="flex justify-content-end">
                     <span class="p-input-icon-left">
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 import DataTable from "primevue/datatable"
 import Column from "primevue/column"
@@ -34,15 +34,18 @@ const search = ref('')
 const loading = ref(false)
 const totalRecords = ref(0)
 const template = ref({})
-onMounted(() => {
+
+
+watch(search, () => collet())
+onMounted(() => collet())
+
+const collet = async () => {
     loading.value = true
     ProdutoService.getData(search.value, false).then(({ data: { data } }) => {
         customers.value = data
         loading.value = false
-        console.log(totalRecords)
     })
-
-})
+}
 
 
 
