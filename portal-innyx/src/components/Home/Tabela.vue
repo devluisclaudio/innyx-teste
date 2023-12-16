@@ -20,7 +20,7 @@
             <Column field="imagem" header="Imagem" style="width: 20%"></Column>
             <Column header="Ações" style="width: 10%">
                 <template #body="{ data }">
-                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="" />
+                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editAction(data)" />
                     <Button icon="pi pi-trash" outlined rounded severity="danger" @click="deleteAction(data)" />
                 </template>
             </Column>
@@ -29,8 +29,8 @@
     <DeleteDialog v-if="deleteProductDialog" :show="deleteProductDialog" :product="selectedProduct" @close="closeDelete"
         @confirm="confirmDelete" />
 
-    <EditDialog v-if="deleteProductDialog" :show="deleteProductDialog" :product="selectedProduct" @close="closeDelete"
-        @confirm="confirmDelete" />
+    <EditDialog v-if="editProductDialog" :show="editProductDialog" :product="selectedProduct" @close="closeEdit"
+        @confirm="confirmEdit" />
     <Toast />
 </template>
 
@@ -46,6 +46,8 @@ import DeleteDialog from '@/components/Home/DeleteDialog.vue';
 import Toast from 'primevue/toast';
 
 import { useToast } from 'primevue/usetoast';
+import EditDialog from './EditDialog.vue';
+import type { IProduto } from '@/utils/vaildaForm';
 const toast = useToast();
 
 
@@ -53,7 +55,8 @@ const customers = ref()
 const search = ref('')
 const loading = ref(false)
 const deleteProductDialog = ref(false)
-const selectedProduct = ref({})
+const editProductDialog = ref(false)
+const selectedProduct = ref({} as IProduto)
 
 
 watch(search, () => collet())
@@ -67,14 +70,14 @@ const collet = async () => {
     })
 }
 
-const deleteAction = (product: object) => {
+const deleteAction = (product: IProduto) => {
     deleteProductDialog.value = true
     selectedProduct.value = product
 }
 
 const closeDelete = () => {
     deleteProductDialog.value = false
-    selectedProduct.value = {}
+    selectedProduct.value = {} as IProduto
 }
 
 const confirmDelete = () => {
@@ -89,6 +92,22 @@ const confirmDelete = () => {
             toast.add({ severity: 'error', summary: 'Alerta', detail: 'Falha ao excluir produto!', life: 3000 })
             loading.value = false
         })
+}
+
+const editAction = (product: IProduto) => {
+    editProductDialog.value = true
+    selectedProduct.value = product
+}
+
+const closeEdit = () => {
+    editProductDialog.value = false
+    selectedProduct.value = {} as IProduto
+}
+
+const confirmEdit = () => {
+    editProductDialog.value = false
+    selectedProduct.value = {} as IProduto
+    collet()
 }
 
 
