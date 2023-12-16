@@ -35,7 +35,7 @@ import InputText from "primevue/inputtext"
 import Button from "primevue/button"
 import Toast from 'primevue/toast';
 
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
 import { useToast } from 'primevue/usetoast';
 
 import { validaFormLogin } from '@/utils/vaildaForm'
@@ -56,6 +56,11 @@ const loading = ref(false)
 
 watch(email, () => errorEmail.value = false)
 watch(password, () => errorPassword.value = false)
+
+onBeforeMount(() => {
+    if (userStore.isLoggedIn)
+        router.push({ name: 'home' })
+})
 
 const login = () => {
     const { error, message, invalidEmail, invalidPassword } = validaFormLogin(email.value, password.value)

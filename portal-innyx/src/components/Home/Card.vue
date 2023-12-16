@@ -4,7 +4,7 @@
             <template #title> Portal Innyx </template>
             <template #content>
                 <p class="m-0">
-                    Olá, {{ user }}. Bem vindo ao nosso portal!
+                    Olá, {{ userName }}. Bem vindo ao nosso portal!
                 </p>
             </template>
         </Card>
@@ -12,11 +12,13 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "@/stores/user";
 import Card from "primevue/card"
 import { ref } from "vue";
+const userStore = useUserStore()
+const userName = ref('')
 
-const user = ref('')
 
+userName.value = userStore.user?.name ?? ''
 
-user.value = 'Luis Cláudio'
 </script>

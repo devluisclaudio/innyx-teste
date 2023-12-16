@@ -1,13 +1,18 @@
 import { defineStore } from 'pinia'
 
+type Iuser =  {
+  name?: string;
+  email?: string;
+}
+
 export const useUserStore = defineStore('user', {
   state: () => ({
-      user: {} as object,
-      isLoggedIn: false as boolean,
-    }
+    user: {} as Iuser,
+    isLoggedIn: false as boolean,
+  }
   ),
   actions: {
-    async setUser(payload: object) {
+    async setUser(payload: Iuser) {
       this.user = payload
       await this.setIsLoggedIn(true)
     },
@@ -22,6 +27,6 @@ export const useUserStore = defineStore('user', {
   },
   persist: {
     storage: localStorage,
-    paths: ['user'],
+    paths: ['user', 'isLoggedIn'],
   },
 })
