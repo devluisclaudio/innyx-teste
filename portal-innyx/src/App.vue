@@ -10,5 +10,7 @@ body {
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--blue-200);
+  margin: 0;
 }
 </style>
