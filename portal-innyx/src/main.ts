@@ -8,6 +8,7 @@ import router from '@/router'
 
 import "primevue/resources/themes/lara-light-green/theme.css";
 import "primeflex/primeflex.css"
+import 'primeicons/primeicons.css'
 
 const app = createApp(App)
 

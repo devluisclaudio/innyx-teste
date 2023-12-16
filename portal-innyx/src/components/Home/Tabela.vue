@@ -1,6 +1,17 @@
 <template>
     <div class="card m-2">
-        <DataTable :value="customers" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+        <DataTable :value="customers" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"
+            tableStyle="min-width: 50rem" :loading="loading">
+            <template #header>
+                <div class="flex justify-content-end">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="search" placeholder="Keyword Search" />
+                    </span>
+                </div>
+            </template>
+            <template #empty> Nenhum produto encontrado. </template>
+            <template #loading> Produtos estão sendo carregados. Aguarde! </template>
             <Column field="name" header="Nome" style="width: 20%"></Column>
             <Column field="country.name" header="Descrição" style="width: 20%"></Column>
             <Column field="company" header="Preço" style="width: 20%"></Column>
@@ -16,11 +27,14 @@ import { CustomerService } from './data';
 
 import DataTable from "primevue/datatable"
 import Column from "primevue/column"
+import InputText from "primevue/inputtext"
 
 onMounted(() => {
-    CustomerService.getCustomersMedium().then((data) => (customers.value = data));
-});
+    CustomerService.getCustomersMedium().then((data) => (customers.value = data))
+})
 
-const customers = ref();
+const customers = ref()
+const search = ref('')
+const loading = ref(false)
 
 </script>
