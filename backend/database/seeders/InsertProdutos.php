@@ -44,5 +44,16 @@ class InsertProdutos extends Seeder
                 'categoria_id' => 3,
             ]
         );
+
+        Produto::create(
+            [
+                'nome' => 'Arroz Integral',
+                'descricao' => 'Arroz Integral 1kg',
+                'preco' => 3.80,
+                'data_validade' => Carbon::now()->addDay(25),
+                'imagem' => 'arroz-integral.jpg',
+                'categoria_id' => 3,
+            ]
+        );
     }
 }

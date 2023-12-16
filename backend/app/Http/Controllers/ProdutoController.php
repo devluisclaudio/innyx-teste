@@ -6,7 +6,6 @@ use App\Http\Repositories\ProdutoRepository;
 use App\Http\Requests\ProdutoPostRequest;
 use Exception;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
 
 class ProdutoController extends Controller
 {

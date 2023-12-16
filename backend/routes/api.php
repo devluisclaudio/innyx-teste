@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProdutoController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +25,5 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::resource('produtos', ProdutoController::class)->middleware('auth:api');
+    Route::resource('categorias', CategoriaController::class)->middleware('auth:api');
 });
