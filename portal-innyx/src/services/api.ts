@@ -1,3 +1,4 @@
+import { jwtStore } from "@/stores/jwt"
 import axios from "axios"
 
 const api = axios.create({

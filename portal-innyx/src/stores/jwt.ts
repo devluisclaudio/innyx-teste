@@ -13,7 +13,7 @@ export const jwtStore = defineStore('jwt', {
         },
         refreshJwt() {
             this.countRetest++
-            return api.get('auth/refreshJwt')
+            return api.get('v1/auth/refreshJwt')
         },
         async jwtLogout() {
             await this.setJwt('');
